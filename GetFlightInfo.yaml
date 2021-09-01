@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: SITA Api model
+  version: '1.0'
+  description: 'Api for MDM service, User service, Kpi service'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /UserService/login:
+    post:
+      summary: Post login
+      operationId: post-userService-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              minProperties: 3
+            examples: {}
+    parameters: []
+  /UserService/signUp:
+    post:
+      summary: ''
+      operationId: post-userService-signUp
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      description: Registry new user
+    parameters: []
+  /MDMService/getAllElements:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KpiElemets'
+              examples: {}
+        '500':
+          description: Internal Server Error
+      operationId: get-mdmService-getAllElements
+      description: ''
+    parameters: []
+  /KpiService/formulaKpi:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KpiFormula'
+      operationId: get-kpi-formulaKpi
+      description: 'Request to get a list of all Kpi formula '
+    post:
+      summary: ''
+      operationId: post-kpi-formulaKpi
+      responses:
+        '200':
+          description: OK
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KpiFormula'
+        description: 'New Kpi formula created from front end '
+    put:
+      summary: ''
+      operationId: put-kpi-formulaKpi
+      responses:
+        '200':
+          description: OK
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KpiFormula'
+        description: Selected Kpi formula to modify
+    parameters: []
+    delete:
+      summary: ''
+      operationId: delete-KpiService-formulaKpi
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KpiFormula'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+components:
+  schemas:
+    User:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          username: string
+          email: string
+          password: string
+      properties:
+        username:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+          format: email
+        password:
+          type: string
+          minLength: 1
+        role:
+          type: string
+          enum:
+            - guest
+            - admin
+      required:
+        - username
+        - email
+        - password
+        - role
+    KpiElemets:
+      description: Model for the native Kpi Elements
+      type: object
+      x-examples:
+        example-1:
+          name: string
+          label: string
+          type: string
+          threshold: string
+      properties:
+        name:
+          type: string
+          minLength: 1
+        label:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          minLength: 1
+        threshold:
+          type: string
+          minLength: 1
+      required:
+        - name
+        - label
+        - type
+    KpiFormula:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          name: string
+          label: string
+          formula: string
+          threshold: string
+      properties:
+        name:
+          type: string
+          minLength: 1
+        label:
+          type: string
+          minLength: 1
+          example: Volo
+        formula:
+          type: string
+          minLength: 1
+        threshold:
+          type: string
+          minLength: 1
+      required:
+        - name
+        - label
+        - formula

@@ -1,0 +1,95 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div cdkDropListGroup>
+            <div  class="row">
+                <div class="col-md-2" style="max-width: 100% !important; flex: auto;">
+                    <div class="card">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title">KPI operators</h4>
+                            <p class="card-category">Drag an elemet to KPI maker</p>
+                            <mat-form-field appearance="fill">
+                                <input matInput [(ngModel)]="constant">
+                            </mat-form-field>
+                            <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                            (click)="kpiInUse.push(constant)">
+                                <i class="material-icons">add</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="operators"  class="example-list-horizontal" (cdkDropListDropped)="drop($event, true)"
+                                >
+                                <div class="example-box-horizontal" *ngFor="let item of operators" cdkDrag [matTooltip]="item">{{item}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div  class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title">KPI blocks</h4>
+                            <p class="card-category">Drag KPI</p>
+                        </div>
+                        <div class="card-body list-container">
+                            <div class="example-list scrollable" cdkDropList [cdkDropListData]="allKpiBlocks" (cdkDropListDropped)="drop($event, true)">
+                                <div class="example-box" *ngFor="let item of allKpiBlocks" cdkDrag [matTooltip]="item">{{item.label}}
+                                    <div>
+                                        <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                                        (click)="addTresholdKpi(item)">
+                                            <i class="material-icons">addchart</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                        <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                                        (click)="modifyKpi(item)">
+                                            <i class="material-icons">edit</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                        <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
+                                        (click)="deleteKpi(item)">
+                                            <i class="material-icons">close</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">KPI maker</h4>
+                            <p class="card-category">Make your KPI</p>
+                        </div>
+                        <div class="card-body" style="position: relative;">
+                            <div cdkDropList [cdkDropListData]="kpiInUse" class="example-list" style="min-height: 300px !important;"
+                                (cdkDropListDropped)="drop($event)">
+                                <div class="example-box" *ngFor="let item of kpiInUse" cdkDrag [matTooltip]="item">{{item}}
+                                    <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
+                                    (click)="removeItem(item)">
+                                        <i class="material-icons">close</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div cdkDropList [cdkDropListData]="trash" style="position: absolute; top: -60px; right: 30px; z-index: 5;"
+                            (cdkDropListDropped)="dropInUse($event)">
+                                <i class="material-icons" style="font-size: 45px; color: #fff; cursor: pointer;" (click)="clear()">close</i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>algorithm:</strong> {{kpiInUse | json}}</p>
+                            <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon" (click)="save()">
+                                <i class="material-icons">save</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>

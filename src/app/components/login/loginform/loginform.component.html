@@ -1,0 +1,31 @@
+<form style="text-align: center;" [formGroup]="formGroup" (ngSubmit)="login()">
+
+  <p>{{errorMessage | uppercase}}</p> 
+
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Username" formControlName="username"/>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Password" type="password" formControlName="password"/>
+  </mat-form-field>
+
+  <p>Non hai ancora un account? <a routerLink="/signup">Registrati</a></p>
+
+  <!--<button
+    mat-raised-button
+    type="submit"
+    class="btn btn-info btn-round btn-just-icon"
+    routerLink="app/dashboard"
+  >
+    <i class="material-icons">login</i>
+    <div class="ripple-container"></div>
+  </button>-->
+  <button
+    mat-raised-button
+    type="submit"
+    class="btn btn-info btn-round"
+  >
+    Login
+  </button>
+</form>

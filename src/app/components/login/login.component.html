@@ -1,0 +1,21 @@
+<div class="loader-wrapper" [ngClass]="{'loaded':contentLoaded}">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+  </div>
+  <!--<canvas id="canvas" #canvas style="z-index: 1"></canvas>-->
+  <app-animated-background style="width: 50%; position: absolute; left: 25%; z-index: 2;"></app-animated-background>
+  <!--<app-animated-background-2 style="width: 100%; position: absolute; z-index: 2;"></app-animated-background-2>-->
+  <div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-center" style="margin-bottom: 2em;">
+        <img class="w-50" src="../assets/img/logo.svg" alt="logo scritta">
+      </div>
+      <div class="top-buffer-20">
+        <app-loginform></app-loginform>
+      </div>
+    </div>
+  </div>
+  

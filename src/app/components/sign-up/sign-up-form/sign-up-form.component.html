@@ -1,0 +1,44 @@
+<div>
+    <h2>Registrati</h2>
+    <p>Hai già un account? <a routerLink="/login">Effettua il login</a></p>
+
+    <p>{{ errorMessage }}</p>
+
+    <form [formGroup]="formGroup" (ngSubmit)="signup()">
+
+        <mat-form-field>
+            <input matInput placeholder="E-mail" formControlName="email" />
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username" />
+        </mat-form-field>
+  
+      <div class="d-flex justify-content-between">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Password"
+            formControlName="password"
+            type="password"
+          />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Conferma password"
+            formControlName="confirmPassword"
+            type="password"
+          />
+        </mat-form-field>
+      </div>
+  
+      <div>
+        <button type="submit" class="btn btn-info">
+          Registrati
+        </button>
+      </div>
+
+    </form>
+</div>
