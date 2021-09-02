@@ -4,7 +4,7 @@
         <p class="card-category">Take your time</p>
     </div>
     <div class="card-body">
-        <p>{{this.data.algo | json}}</p>
+        <p>{{data.label}}</p>
         <br>
         <mat-form-field appearance="fill">
             <mat-label>Operator</mat-label>
@@ -16,13 +16,13 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Constant</mat-label>
-            <input matInput type="number">
+            <mat-label>Threshold</mat-label>
+            <input matInput type="number" value="{{threshold}}" [(ngModel)]="threshold">
         </mat-form-field>
     </div>
     <br>
     <div style="text-align: right;">
-    <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="onNoClick()">Exit</button>
-    <button mat-raised-button type="button" class="btn btn-success btn-round" cdkFocusInitial (click)="onNoClick()">Save</button>
+    <button mat-raised-button type="button" class="btn btn-danger btn-round" (click)="refuse()">Exit</button>
+    <button mat-raised-button type="button" class="btn btn-success btn-round" cdkFocusInitial (click)="confirm()">Save</button>
     </div>
 </div>

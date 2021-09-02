@@ -112,21 +112,35 @@ export class DynamicCrudComponent implements OnInit {
         event.previousContainer.data.push(JSON.parse(JSON.stringify(event.container.data[event.currentIndex])))
         }
     }
-
+    //modifica di un KPI
     modifyKpi(){
         let inputs = ['Totale voli in orario','/','Totale voli'];
         this.kpiInUse.push(...inputs);
     }
-
-    addTresholdKpi() {
+    //aggiungere soglia
+    addTresholdKpi(kpi: Kpi) {
         const dialogRef = this.dialog.open(SaveTresholdDialogComponent, {
             width: '500px',
             height: '400px',
-            data: {algo: this.kpiInUse}
+            data: kpi
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+        dialogRef.afterClosed().subscribe(response => {
+            if(response.isToUpdate){
+                let updatedKpi = {...kpi};
+                updatedKpi.threshold = response.threshold.toString();
+                //aggiorno nel DB
+                this.kpiService.updateKpi(updatedKpi).subscribe(
+                    response => {
+                        //aggiorno in locale
+                        kpi.threshold = updatedKpi.threshold;
+                    }, 
+                    error => {
+                        //TODO gestire l'errore mostrando messaggio
+                        console.log(error)
+                    }
+                );
+            }
         });
     }
     //elimina KPI chiedere conferma con un dialog

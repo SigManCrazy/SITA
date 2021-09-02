@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-save-treshold-dialog',
@@ -8,12 +9,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SaveTresholdDialogComponent {
 
+    threshold: number;
 
-constructor(    public dialogRef: MatDialogRef<SaveTresholdDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(
+        public dialogRef: MatDialogRef<SaveTresholdDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.threshold = 12 //this.data.threshold;
+    }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-        }
+    confirm(): void {
+        this.dialogRef.close({isToUpdate: true, threshold: this.threshold});
+    }
+
+    refuse(): void {
+        this.dialogRef.close({isToUpdate: false});
+    }
 
 }
