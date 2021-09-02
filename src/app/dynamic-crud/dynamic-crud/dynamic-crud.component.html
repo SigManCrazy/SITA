@@ -7,16 +7,20 @@
                         <div class="card-header card-header-info">
                             <h4 class="card-title">KPI operators</h4>
                             <p class="card-category">Drag an elemet to KPI maker</p>
-                            <mat-form-field appearance="fill">
-                                <input matInput [(ngModel)]="constant">
-                            </mat-form-field>
-                            <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
-                            (click)="kpiInUse.push(constant)">
-                                <i class="material-icons">add</i>
-                                <div class="ripple-container"></div>
-                            </button>
                         </div>
                         <div class="card-body">
+
+                            <div class="d-flex">
+                                <mat-form-field >
+                                    <input matInput placeholder="Put your constant" [(ngModel)]="constant">
+                                </mat-form-field>
+                                <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                                (click)="kpiInUse.push(constant)">
+                                    <i class="material-icons">add</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                             </div>
+                            
                             <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="operators"  class="example-list-horizontal" (cdkDropListDropped)="drop($event, true)"
                                 >
                                 <div class="example-box-horizontal" *ngFor="let item of operators" cdkDrag [matTooltip]="item">{{item}}
@@ -34,20 +38,25 @@
                             <p class="card-category">Drag KPI</p>
                         </div>
                         <div class="card-body list-container">
-                            <div class="example-list scrollable" cdkDropList [cdkDropListData]="allKpiBlocks" (cdkDropListDropped)="drop($event, true)">
-                                <div class="example-box" *ngFor="let item of allKpiBlocks" cdkDrag [matTooltip]="item">{{item.label}}
+
+                            <mat-form-field appearance="fill">
+                                <input matInput placeholder="Filter" (input)="searchData()" [(ngModel)]="valueFilter">
+                            </mat-form-field>
+
+                            <div class="example-list scrollable" cdkDropList [cdkDropListData]="components" (cdkDropListDropped)="drop($event, true)">
+                                <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">{{getLabel(item)}}
                                     <div>
-                                        <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
                                         (click)="addTresholdKpi(item)">
                                             <i class="material-icons">addchart</i>
                                             <div class="ripple-container"></div>
                                         </button>
-                                        <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon"
+                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
                                         (click)="modifyKpi(item)">
                                             <i class="material-icons">edit</i>
                                             <div class="ripple-container"></div>
                                         </button>
-                                        <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
+                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-danger btn-round btn-just-icon"
                                         (click)="deleteKpi(item)">
                                             <i class="material-icons">close</i>
                                             <div class="ripple-container"></div>
@@ -67,9 +76,9 @@
                         <div class="card-body" style="position: relative;">
                             <div cdkDropList [cdkDropListData]="kpiInUse" class="example-list" style="min-height: 300px !important;"
                                 (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" *ngFor="let item of kpiInUse" cdkDrag [matTooltip]="item">{{item}}
+                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" [matTooltip]="getLabel(item)">{{getLabel(item)}}
                                     <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
-                                    (click)="removeItem(item)">
+                                    (click)="removeItem(i)">
                                         <i class="material-icons">close</i>
                                         <div class="ripple-container"></div>
                                     </button>
@@ -81,7 +90,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <p><strong>algorithm:</strong> {{kpiInUse | json}}</p>
+                            <p><strong>Algorithm:</strong> {{getAlg()}}</p>
                             <button mat-raised-button type="button" class="btn btn-info btn-round btn-just-icon" (click)="save()">
                                 <i class="material-icons">save</i>
                                 <div class="ripple-container"></div>

@@ -49,7 +49,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/KpiElemets'
+                type: array
+                items:
+                  $ref: '#/components/schemas/KpiElemets'
               examples: {}
         '500':
           description: Internal Server Error

@@ -1,7 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BasicElement } from 'app/shared/model/Basicelements';
 import { Kpi } from 'app/shared/model/Kpi';
+import { BasicElementsService } from 'app/shared/service/basic-elements.service';
 import { KpiService } from 'app/shared/service/kpi.service';
 import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 import { SaveDialogComponent } from '../components/save-dialog/save-dialog.component';
@@ -14,7 +16,8 @@ import { SaveTresholdDialogComponent } from '../components/save-treshold-dialog/
 })
 export class DynamicCrudComponent implements OnInit {
   
-    constant = 'Costant'
+    constant = '';
+    valueFilter = '';
     constantAux: any[] = [this.constant];
     operators = [
         '+',
@@ -29,23 +32,57 @@ export class DynamicCrudComponent implements OnInit {
         '}',
     ];
     
-    kpiInUse = [];
+    kpiInUse = []; //elements all'interno del KPI maker
     trash = [];
-    allKpiBlocks: any = [];
+    
+    //components = basic elements + kpis
+    //filtrati
+    components: any = [];
+    //non filtrati
+    allComponents: any = [];
 
     constructor(
         public dialog: MatDialog,
-        private kpiService: KpiService
+        private kpiService: KpiService,
+        private basicElementsService: BasicElementsService
     ) { }
 
     ngOnInit(): void {
+        this.initElementsList() //lista di kpis e basic elements
+    }
+
+    initElementsList(): void {
         this.getAllKpi();
+        this.getAllBasicElements();
     }
 
     getAllKpi(): void {
         this.kpiService.getAllKpi().subscribe(
-            elements =>  this.allKpiBlocks = elements
+            elements => {
+                this.components = [...this.components, ...elements];
+                this.allComponents = [...this.allComponents, ...elements];
+            }
         );
+    }
+
+    getAllBasicElements(): void{
+        this.basicElementsService.getAllBasicElements().subscribe(
+            elements => {
+                this.components = [...this.components, ...elements];
+                this.allComponents = [...this.allComponents, ...elements];
+            }
+        )
+    }
+
+    searchData() {
+        this.components = this.allComponents.filter((item) => {
+        return item.label.toLowerCase().includes(this.valueFilter.toLowerCase());
+        });
+    }
+
+    isKpi(val): boolean { 
+        //le kpi hanno la formula
+        return val.hasOwnProperty('formula'); 
     }
 
     drop(event: CdkDragDrop<any[]>, ignore?: boolean) {
@@ -113,8 +150,8 @@ export class DynamicCrudComponent implements OnInit {
         this.kpiInUse = [];
     }
     //rimuove un oggetto dal KPI maker
-    removeItem(item){
-
+    removeItem(index){
+        this.kpiInUse.splice(index, 1)
     }
 
     save() {
@@ -127,6 +164,27 @@ export class DynamicCrudComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
         });
+    }
+
+    getAlg(): string {
+        let alg = '[  ';
+        this.kpiInUse.forEach(el => {
+            if(typeof el === 'string'){
+                alg += '"' + el + '"';
+            }else{
+                alg += '"' + el.label + '"';
+            }
+            alg += ', ';
+        })
+        alg = alg.slice(0, -2);
+        return alg += ']';
+    }
+
+    getLabel(item): string {
+        if(typeof item === 'string'){
+            return item;
+        }
+        return item.label;
     }
 
     checkSing() {
