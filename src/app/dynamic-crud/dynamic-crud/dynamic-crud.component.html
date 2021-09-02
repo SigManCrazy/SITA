@@ -76,7 +76,7 @@
                         <div class="card-body" style="position: relative;">
                             <div cdkDropList [cdkDropListData]="kpiInUse" class="example-list" style="min-height: 300px !important;"
                                 (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" [matTooltip]="getLabel(item)">{{getLabel(item)}}
+                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" cdkDrag [matTooltip]="getLabel(item)">{{getLabel(item)}}
                                     <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
                                     (click)="removeItem(i)">
                                         <i class="material-icons">close</i>

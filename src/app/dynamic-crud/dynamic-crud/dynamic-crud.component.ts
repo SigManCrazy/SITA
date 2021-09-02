@@ -137,14 +137,27 @@ export class DynamicCrudComponent implements OnInit {
             data: kpi
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            if(result){
+        dialogRef.afterClosed().subscribe(toDelete => {
+            if(toDelete){
+                //elimino nel db
                 this.kpiService.deleteKpi(kpi).subscribe(
                     //.............
                 )
+                //elimino localmente
+                for (let i = 0; i < this.components.length; i++) {
+                    if (this.components[i].name === kpi.name) {
+                        this.components.splice(i--, 1);
+                    }
+                }
+                for (let i = 0; i < this.allComponents.length; i++) {
+                    if (this.allComponents[i].name === kpi.name) {
+                        this.allComponents.splice(i--, 1);
+                    }
+                }
             }
         });
     }
+
     //pulisce il KPI maker
     clear() {
         this.kpiInUse = [];
@@ -153,16 +166,26 @@ export class DynamicCrudComponent implements OnInit {
     removeItem(index){
         this.kpiInUse.splice(index, 1)
     }
-
+    //salva la formula appena creata nel KPI maker
     save() {
         const dialogRef = this.dialog.open(SaveDialogComponent, {
             width: '500px',
             height: '400px',
             data: {algo: this.kpiInUse}
         });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+    
+        dialogRef.afterClosed().subscribe(newKpi => {
+            if(newKpi.isToCreate){
+                let kpi = {
+                    name: '', //newKpi.name, ?? compito del BE o FE? //TODO
+                    label: newKpi.label,
+                    formula: [...this.kpiInUse],
+                    threshold: newKpi.threshold
+                }
+                console.log(kpi)
+                this.components.unshift(kpi);
+                this.allComponents.unshift(kpi);
+            }
         });
     }
 

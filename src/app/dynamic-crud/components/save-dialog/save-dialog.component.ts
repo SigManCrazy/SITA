@@ -8,12 +8,32 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SaveDialogComponent {
 
-  constructor(    
+    name = '';
+    threshold = '';
+
+    constructor(
         public dialogRef: MatDialogRef<SaveDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
-    onNoClick(): void {
-        this.dialogRef.close();
-      }
+    getAlg(): string {
+        let alg = '[';
+        this.data.algo.forEach(el => {
+            if(typeof el === 'string'){
+                alg += '"' + el + '"';
+            }else{
+                alg += '"' + el.name + '"';
+            }
+            alg += ', ';
+        })
+        return alg += ']';
+    }
+
+    confirm(): void {
+        this.dialogRef.close({isToCreate: true, label: this.name, threshold: this.threshold});
+    }
+
+    refuse(): void {
+        this.dialogRef.close({isToCreate: false});
+    }
 }
