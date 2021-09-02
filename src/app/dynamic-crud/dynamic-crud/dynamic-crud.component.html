@@ -21,9 +21,14 @@
                                 </button>
                              </div>
                             
-                            <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="operators"  class="example-list-horizontal" (cdkDropListDropped)="drop($event, true)"
-                                >
-                                <div class="example-box-horizontal" *ngFor="let item of operators" cdkDrag [matTooltip]="item">{{item}}
+                            <div cdkDropList 
+                                cdkDropListOrientation="horizontal" 
+                                cdkDropListSortingDisabled
+                                [cdkDropListData]="operators"  
+                                class="example-list-horizontal" 
+                                (cdkDropListDropped)="drop($event, true)">
+                                <div class="example-box-horizontal" *ngFor="let item of operators; let i = index" cdkDrag [matTooltip]="operatorsName[i]">
+                                    <p id="operators">{{item}}</p>
                                 </div>
                             </div>
                         </div>
@@ -36,13 +41,13 @@
                         <div class="card-header card-header-warning">
                             <h4 class="card-title">KPI blocks</h4>
                             <p class="card-category">Drag KPI</p>
-                        </div>
-                        <div class="card-body list-container">
 
                             <mat-form-field appearance="fill">
                                 <input matInput placeholder="Filter" (input)="searchData()" [(ngModel)]="valueFilter">
                             </mat-form-field>
 
+                        </div>
+                        <div class="card-body list-container">
                             <div class="example-list scrollable" cdkDropList [cdkDropListData]="components" (cdkDropListDropped)="drop($event, true)">
                                 <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">{{getLabel(item)}}
                                     <div>

@@ -19,18 +19,10 @@ export class DynamicCrudComponent implements OnInit {
     constant = '';
     valueFilter = '';
     constantAux: any[] = [this.constant];
-    operators = [
-        '+',
-        '-',
-        '*',
-        '/',
-        '(',
-        ')',
-        '[',
-        ']',
-        '{',
-        '}',
-    ];
+    operators = ['+','-','*','/','(',')','[',']','{','}'];
+    operatorsName = ['Addition','Subtraction','Multiplication',
+            'Division','Open bracket','Closed bracket','Open square bracket',
+            'Closed square bracket','Open curly bracket','Closed curly bracket'];
     
     kpiInUse = []; //elements all'interno del KPI maker
     trash = [];

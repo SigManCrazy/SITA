@@ -109,22 +109,29 @@
     background: white;
     border-radius: 4px;
     overflow: hidden;
+    background-color: #4feaff;
   }
   
   .example-box-horizontal {
     padding: 20px 10px;
     border-right: solid 1px #ccc;
+    background-color: #30d0e6d3 !important;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
-    flex-direction: row;
+    /*flex-direction: row;*/
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     box-sizing: border-box;
     cursor: move;
     background: white;
     font-size: 14px;
     flex-grow: 1;
     flex-basis: 0;
+  }
+
+  #operators{
+      font-size: 2em;
+      margin-bottom: 0;
   }
 
   .list-container {
