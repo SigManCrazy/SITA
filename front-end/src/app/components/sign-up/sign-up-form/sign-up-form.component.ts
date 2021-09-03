@@ -39,7 +39,7 @@ export class SignUpFormComponent implements OnInit {
     if (this.formGroup.valid && this.checkPassword()) {
       let payload = this.formGroup.value;
       delete payload.confirmPassword;
-      payload.role = 'guest';
+      payload.roles = 'guest';
       this.signupService.signup(this.formGroup.value).subscribe(
         (res) => {
           this.errorMessage = '';

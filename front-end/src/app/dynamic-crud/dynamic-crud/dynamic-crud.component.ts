@@ -182,15 +182,24 @@ export class DynamicCrudComponent implements OnInit {
     
         dialogRef.afterClosed().subscribe(newKpi => {
             if(newKpi.isToCreate){
-                let kpi = {
-                    name: '', //newKpi.name, ?? compito del BE o FE? //TODO
+                let kpi: Kpi = {
+                    name: newKpi.label, //newKpi.name, ?? compito del BE o FE? //TODO
                     label: newKpi.label,
-                    formula: [...this.kpiInUse],
+                    formula: [...this.kpiInUse].toString(),
                     threshold: newKpi.threshold
                 }
-                console.log(kpi)
-                this.components.unshift(kpi);
-                this.allComponents.unshift(kpi);
+                this.kpiService.addKpi(kpi).subscribe(
+                    response => {
+                        //aggiorno in locale
+                        console.log(kpi)
+                        this.components.unshift(kpi);
+                        this.allComponents.unshift(kpi);
+                    }, 
+                    error => {
+                        //TODO gestire l'errore mostrando messaggio
+                        console.log(error)
+                    }
+                );
             }
         });
     }

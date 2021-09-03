@@ -32,7 +32,7 @@ export class KpiService {
       deleteKpi(kpi: Kpi): Observable<Kpi> {
 
         let name = new HttpParams();
-        name = name.append('kpi', kpi.name);
+        name = name.append('name', kpi.name);
 
         let httpOptionsDel = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
