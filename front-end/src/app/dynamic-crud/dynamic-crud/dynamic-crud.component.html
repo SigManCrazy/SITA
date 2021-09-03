@@ -79,18 +79,33 @@
                             <p class="card-category">Make your KPI</p>
                         </div>
                         <div class="card-body" style="position: relative;">
-                            <div cdkDropList [cdkDropListData]="kpiInUse" class="example-list" style="min-height: 300px !important;"
+                            <div 
+                                cdkDropList 
+                                [cdkDropListData]="kpiInUse" 
+                                class="example-list" 
+                                style="min-height: 300px !important;"
                                 (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" cdkDrag [matTooltip]="getLabel(item)">{{getLabel(item)}}
-                                    <button mat-raised-button type="button" class="btn btn-danger btn-round btn-just-icon"
-                                    (click)="removeItem(i)">
+                                
+                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" cdkDrag [matTooltip]="getLabel(item)">
+                                    {{getLabelMaker(item)}}
+                                    
+                                    <button 
+                                        mat-raised-button 
+                                        type="button" 
+                                        class="btn btn-danger btn-round btn-just-icon"
+                                        (click)="removeItem(i)"
+                                    >
                                         <i class="material-icons">close</i>
                                         <div class="ripple-container"></div>
                                     </button>
                                 </div>
                             </div>
-                            <div cdkDropList [cdkDropListData]="trash" style="position: absolute; top: -60px; right: 30px; z-index: 5;"
-                            (cdkDropListDropped)="dropInUse($event)">
+                            
+                            <div 
+                                cdkDropList [cdkDropListData]="trash" 
+                                style="position: absolute; top: -60px; right: 30px; z-index: 5;"
+                                (cdkDropListDropped)="dropInUse($event)"
+                            >
                                 <i class="material-icons" style="font-size: 45px; color: #fff; cursor: pointer;" (click)="clear()">close</i>
                             </div>
                         </div>

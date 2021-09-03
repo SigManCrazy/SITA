@@ -16,10 +16,13 @@ import { SaveTresholdDialogComponent } from '../components/save-treshold-dialog/
 })
 export class DynamicCrudComponent implements OnInit {
   
+    //NgModel per blocchetto della costante
     constant = '';
+    //NgModel per filtro di ricerca
     valueFilter = '';
-    constantAux: any[] = [this.constant];
+
     operators = ['+','-','*','/','(',')','[',']','{','}'];
+    //per i tooltip
     operatorsName = ['Addition','Subtraction','Multiplication',
             'Division','Open bracket','Closed bracket','Open square bracket',
             'Closed square bracket','Open curly bracket','Closed curly bracket'];
@@ -66,14 +69,14 @@ export class DynamicCrudComponent implements OnInit {
         )
     }
 
-    searchData() {
+    searchData() { //filtro dei components
         this.components = this.allComponents.filter((item) => {
-        return item.label.toLowerCase().includes(this.valueFilter.toLowerCase());
+            return item.label.toLowerCase().includes(this.valueFilter.toLowerCase());
         });
     }
 
     isKpi(val): boolean { 
-        //le kpi hanno la formula
+        //le kpi hanno la property 'formula'
         return val.hasOwnProperty('formula'); 
     }
 
@@ -88,6 +91,7 @@ export class DynamicCrudComponent implements OnInit {
                                     event.currentIndex);
                 }
         }
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
 
     dropInUse(event: CdkDragDrop<any[]>) {
@@ -105,9 +109,13 @@ export class DynamicCrudComponent implements OnInit {
         }
     }
     //modifica di un KPI
-    modifyKpi(){
-        let inputs = ['Totale voli in orario','/','Totale voli'];
-        this.kpiInUse.push(...inputs);
+    modifyKpi(kpi: Kpi){
+        let formulaFromStringToArray = kpi.formula.split("'"); //converto
+        formulaFromStringToArray = formulaFromStringToArray.filter(el => el !== ","); //tolgo le virgole
+        formulaFromStringToArray.pop(); //tolgo spazio alla fine
+        formulaFromStringToArray.shift(); //tolgo spazio all'inizio
+        
+        this.kpiInUse.push(...formulaFromStringToArray);
     }
     //aggiungere soglia
     addTresholdKpi(kpi: Kpi) {
@@ -146,9 +154,7 @@ export class DynamicCrudComponent implements OnInit {
         dialogRef.afterClosed().subscribe(toDelete => {
             if(toDelete){
                 //elimino nel db
-                this.kpiService.deleteKpi(kpi).subscribe(
-                    //.............
-                )
+                this.kpiService.deleteKpi(kpi).subscribe();
                 //elimino localmente
                 for (let i = 0; i < this.components.length; i++) {
                     if (this.components[i].name === kpi.name) {
@@ -183,9 +189,9 @@ export class DynamicCrudComponent implements OnInit {
         dialogRef.afterClosed().subscribe(newKpi => {
             if(newKpi.isToCreate){
                 let kpi: Kpi = {
-                    name: newKpi.label, //newKpi.name, ?? compito del BE o FE? //TODO
+                    name: newKpi.label,
                     label: newKpi.label,
-                    formula: [...this.kpiInUse].toString(),
+                    formula: this.getAlgToSend(),
                     threshold: newKpi.threshold
                 }
                 this.kpiService.addKpi(kpi).subscribe(
@@ -204,7 +210,22 @@ export class DynamicCrudComponent implements OnInit {
         });
     }
 
-    getAlg(): string {
+    getAlgToSend(): string { //costruisce la formula sottoforma di string da mandare al BE
+        let alg = '';
+        this.kpiInUse.forEach(el => {
+            if(typeof el === 'string'){
+                alg += "'" + el + "'";
+            }else{
+                alg += "'" + el.label + "'";
+            }
+            alg += ',';
+        })
+        alg = alg.slice(0, -1);
+        console.log(alg)
+        return alg;
+    }
+
+    getAlg(): string { //costruisce la formula sottoforma di string da visualizzare
         let alg = '[  ';
         this.kpiInUse.forEach(el => {
             if(typeof el === 'string'){
@@ -219,6 +240,16 @@ export class DynamicCrudComponent implements OnInit {
     }
 
     getLabel(item): string {
+        if(typeof item === 'string'){
+            if(this.operators.includes(item)){
+                return this.operatorsName[this.operators.indexOf(item)];
+            }
+            else return item;
+        }
+        return item.label;
+    }
+
+    getLabelMaker(item): string {
         if(typeof item === 'string'){
             return item;
         }

@@ -72,7 +72,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/KpiFormula'
               examples:
-                example-1:
+                example1:
                   value:
                     - name: OTA
                       label: On Time Arrival
