@@ -9,7 +9,7 @@ import { User } from '../model/User';
 })
 export class AuthenticationService {
 
-  private loginUrl = environment.apiUrl + '/UserService/login'; 
+  private loginUrl = environment.userUrl + '/UserService/login'; 
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

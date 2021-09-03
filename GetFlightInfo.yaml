@@ -71,6 +71,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/KpiFormula'
+              examples:
+                example-1:
+                  value:
+                    - name: OTA
+                      label: On Time Arrival
+                      formula: '''Totale voli'',''/'',''Totale voli in ritardo'''
+                      threshold: '23'
+                    - name: OTD
+                      label: On Time Defered
+                      formula: '''Totale voli'',''+'',''Voli del giorno'''
+                      threshold: '5'
+                    - name: VNP
+                      label: Voli non partiti
+                      formula: '''Totale voli'',''/'',''Totale voli partiti'''
+                      threshold: '15'
       operationId: get-kpi-formulaKpi
       description: 'Request to get a list of all Kpi formula '
     post:
@@ -106,11 +121,6 @@ paths:
       responses:
         '200':
           description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KpiFormula'
       parameters:
         - schema:
             type: string

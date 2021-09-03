@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { Kpi } from '../model/Kpi';
 })
 export class KpiService {
 
-    private apiUrl = environment.apiUrl + '/KpiService/formulaKpi';
+    private kpiUrl = environment.kpiUrl + '/KpiService/formulaKpi';
 
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,19 +18,27 @@ export class KpiService {
       constructor(private http: HttpClient) {}
     
       getAllKpi(): Observable<Kpi[]> {
-        return this.http.get<Kpi[]>(this.apiUrl, this.httpOptions);
+        return this.http.get<Kpi[]>(this.kpiUrl, this.httpOptions);
       }
     
       addKpi(kpi: Kpi): Observable<Kpi> {
-        return this.http.post<Kpi>(this.apiUrl, kpi);
+        return this.http.post<Kpi>(this.kpiUrl, kpi);
       }
     
       updateKpi(kpi: Kpi): Observable<Kpi> {
-        return this.http.put<Kpi>(this.apiUrl, kpi);
+        return this.http.put<Kpi>(this.kpiUrl, kpi);
       }
 
       deleteKpi(kpi: Kpi): Observable<Kpi> {
-        const url = `${this.apiUrl}/${kpi.name}`;
-        return this.http.delete<Kpi>(url, this.httpOptions);
+
+        let name = new HttpParams();
+        name = name.append('kpi', kpi.name);
+
+        let httpOptionsDel = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+            params: name
+          };
+
+        return this.http.delete<Kpi>(this.kpiUrl, httpOptionsDel);
       }
 }

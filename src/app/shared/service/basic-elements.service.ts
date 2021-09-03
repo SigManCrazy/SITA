@@ -9,7 +9,7 @@ import { BasicElement } from '../model/Basicelements';
 })
 export class BasicElementsService {
 
-    private apiUrl = environment.apiUrl + '/MDMService/getAllElements';
+    private apiUrl = environment.mdmUrl + '/MDMService/getAllElements';
 
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

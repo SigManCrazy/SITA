@@ -9,7 +9,7 @@ import { User } from '../model/User';
 })
 export class SignupService {
 
-  private signupUrl = environment.apiUrl + '/UserService/signUp';
+  private userUrl = environment.userUrl + '/UserService/signUp';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,6 +18,6 @@ export class SignupService {
   constructor(private http: HttpClient) {}
 
   signup(data: Object): Observable<User> {
-    return this.http.post<User>(this.signupUrl, data, this.httpOptions);
+    return this.http.post<User>(this.userUrl, data, this.httpOptions);
   }
 }
