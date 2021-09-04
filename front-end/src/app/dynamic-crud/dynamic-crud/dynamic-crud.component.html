@@ -41,32 +41,32 @@
                         <div class="card-header card-header-warning">
                             <h4 class="card-title">KPI blocks</h4>
                             <p class="card-category">Drag KPI</p>
-
-                            <mat-form-field appearance="fill">
+                        </div>
+                        <div>
+                            <mat-form-field id="filter" appearance="fill">
                                 <input matInput placeholder="Filter" (input)="searchData()" [(ngModel)]="valueFilter">
                             </mat-form-field>
-
-                        </div>
-                        <div class="card-body list-container">
-                            <div class="example-list scrollable" cdkDropList [cdkDropListData]="components" (cdkDropListDropped)="drop($event, true)">
-                                <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">
-                                    <p>{{getLabel(item)}}</p>
-                                    <div>
-                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
-                                        (click)="addTresholdKpi(item)">
-                                            <i class="material-icons">addchart</i>
-                                            <div class="ripple-container"></div>
-                                        </button>
-                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
-                                        (click)="modifyKpi(item)">
-                                            <i class="material-icons">edit</i>
-                                            <div class="ripple-container"></div>
-                                        </button>
-                                        <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-danger btn-round btn-just-icon"
-                                        (click)="deleteKpi(item)">
-                                            <i class="material-icons">close</i>
-                                            <div class="ripple-container"></div>
-                                        </button>
+                            <div class="card-body list-container">
+                                <div class="example-list scrollable" cdkDropList [cdkDropListData]="components" (cdkDropListDropped)="drop($event, true)">
+                                    <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">
+                                        <p>{{getLabel(item)}}</p>
+                                        <div>
+                                            <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
+                                            (click)="addTresholdKpi(item)">
+                                                <i class="material-icons">addchart</i>
+                                                <div class="ripple-container"></div>
+                                            </button>
+                                            <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
+                                            (click)="modifyKpi(item)">
+                                                <i class="material-icons">edit</i>
+                                                <div class="ripple-container"></div>
+                                            </button>
+                                            <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-danger btn-round btn-just-icon"
+                                            (click)="deleteKpi(item)">
+                                                <i class="material-icons">close</i>
+                                                <div class="ripple-container"></div>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
