@@ -15,6 +15,8 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
+    private menuOpen: boolean = false;
+
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
@@ -32,6 +34,28 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+    }
+
+    openMenu() {
+        if(!this.menuOpen){
+            const menu = document.getElementById('sidebar-important');
+            menu.removeAttribute('sidebar-important');
+            menu.id = 'sidebar-important-open';
+
+            const mainPanel = document.getElementById('main-panel-important');
+            mainPanel.removeAttribute('main-panel-important');
+            mainPanel.id = 'main-panel-important-sidebar-open';
+            this.menuOpen = true;
+        }else{
+            const menu = document.getElementById('sidebar-important-open');
+            menu.removeAttribute('sidebar-important-open');
+            menu.id = 'sidebar-important';
+
+            const mainPanel = document.getElementById('main-panel-important-sidebar-open');
+            mainPanel.removeAttribute('main-panel-important-sidebar-open');
+            mainPanel.id = 'main-panel-important';
+            this.menuOpen = false;
+        }
     }
 
     sidebarOpen() {

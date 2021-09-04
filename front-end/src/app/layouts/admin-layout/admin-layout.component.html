@@ -1,9 +1,9 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-4.jpeg">
+    <div id="sidebar-important" class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-4.jpeg">
         <app-sidebar></app-sidebar>
         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpeg)"></div>
     </div>
-    <div class="main-panel">
+    <div id="main-panel-important" class="main-panel">
         <app-navbar></app-navbar>
         <router-outlet></router-outlet>
         <div *ngIf="isMaps('maps')">

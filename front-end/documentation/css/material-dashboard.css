@@ -13114,8 +13114,9 @@ h2.title {
 
 .main-panel {
   position: relative;
+  /*
   float: right;
-  width: calc(100% - 260px);
+  width: calc(100% - 260px);*/
   -webkit-transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
   transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1); }
   .main-panel > .content {
@@ -13140,11 +13141,11 @@ h2.title {
 .sidebar,
 .main-panel,
 .sidebar-wrapper {
-  -webkit-transition-property: top,bottom,width;
-  -webkit-transition-property: top,bottom, width;
+  -webkit-transition-property: top,bottom,left;
+  -webkit-transition-property: top,bottom, left;
   transition-property: top,bottom, width;
-  -webkit-transition-duration: .2s,.2s, .35s;
-  transition-duration: .2s,.2s, .35s;
+  -webkit-transition-duration: .2s,.2s, 1.2s;
+  transition-duration: .2s,.2s, 1.2s;
   -webkit-transition-timing-function: linear,linear,ease;
   transition-timing-function: linear,linear,ease;
   -webkit-overflow-scrolling: touch; }
@@ -14863,7 +14864,7 @@ a[aria-expanded="true"] .caret,
   .navbar-toggler .icon-bar {
     display: block;
     position: relative;
-    background: #555 !important;
+    background: rgba(255, 255, 255, 0) !important;
     width: 24px;
     height: 2px;
     border-radius: 1px;

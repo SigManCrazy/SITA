@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
 import 'rxjs/add/operator/filter';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -19,6 +19,17 @@ export class AdminLayoutComponent implements OnInit {
 
   constructor( public location: Location, private router: Router) {}
 
+  /*
+  ngOnChanges() {
+    if ($(window).width() <= 991) {
+        const menu = document.getElementById('sidebar-important');
+        menu.removeAttribute('sidebar-important');
+
+        const mainPanel = document.getElementById('main-panel-important');
+        mainPanel.removeAttribute('main-panel-important');
+    }
+  }
+*/
   ngOnInit() {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 

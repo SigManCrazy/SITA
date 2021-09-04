@@ -1,0 +1,32 @@
+#main-panel-important{
+    float: none;
+    width: 100%;
+
+    -webkit-transition-property: top,bottom,left;
+    transition-property: top,bottom, left;
+    -webkit-transition-duration: .2s,.2s, 1.2s;
+    transition-duration: .2s,.2s, 1.2s;
+    -webkit-transition-timing-function: linear,linear,ease;
+    transition-timing-function: linear,linear,ease;
+}
+
+#main-panel-important-sidebar-open{
+    float: right;
+    width: calc(100% - 260px);
+}
+
+#sidebar-important{
+    left: -100%;
+}
+
+#sidebar-important-open{
+    left: 0;
+    transition: all 0.2s ease 0s;
+}
+
+@media (max-width: 991px) {
+    #sidebar-important-open{
+        left: -260px;
+        transition: all 0.5s ease 0s;
+    }
+}
