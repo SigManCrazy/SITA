@@ -80,6 +80,10 @@ export class DynamicCrudComponent implements OnInit {
         return val.hasOwnProperty('formula'); 
     }
 
+    isOperator(item): boolean {
+        return typeof item === 'string';
+    }
+
     drop(event: CdkDragDrop<any[]>, ignore?: boolean) {
         if(!ignore){
             if (event.previousContainer != event.container) {

@@ -49,7 +49,8 @@
                         </div>
                         <div class="card-body list-container">
                             <div class="example-list scrollable" cdkDropList [cdkDropListData]="components" (cdkDropListDropped)="drop($event, true)">
-                                <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">{{getLabel(item)}}
+                                <div class="example-box" *ngFor="let item of components" cdkDrag [matTooltip]="getLabel(item)">
+                                    <p>{{getLabel(item)}}</p>
                                     <div>
                                         <button mat-raised-button type="button" *ngIf="isKpi(item)" class="btn btn-info btn-round btn-just-icon"
                                         (click)="addTresholdKpi(item)">
@@ -86,8 +87,8 @@
                                 style="min-height: 300px !important;"
                                 (cdkDropListDropped)="drop($event)">
                                 
-                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" cdkDrag [matTooltip]="getLabel(item)">
-                                    {{getLabelMaker(item)}}
+                                <div class="example-box" *ngFor="let item of kpiInUse; let i = index" [ngClass]="isOperator(item) ? 'isOperator' : 'isElement'" cdkDrag [matTooltip]="getLabel(item)">
+                                    <p>{{getLabelMaker(item)}}</p>
                                     
                                     <button 
                                         mat-raised-button 
