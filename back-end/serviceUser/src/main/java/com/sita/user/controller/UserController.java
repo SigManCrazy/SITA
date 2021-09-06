@@ -1,6 +1,7 @@
 package com.sita.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,9 @@ public class UserController {
 	
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody Users user){
+		if(user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
+		}
 		repo.save(user);
 		return ResponseEntity.ok(user);
 	}
