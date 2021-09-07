@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sita</groupId>
-	<artifactId>serviceMDM</artifactId>
+	<artifactId>service-mdm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>serviceMDM</name>
+	<name>service-mdm</name>
 	<description>Service MDM for SITA project</description>
 	<properties>
 		<java.version>15</java.version>
@@ -44,7 +44,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

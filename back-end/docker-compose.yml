@@ -12,57 +12,52 @@ version: '3.7'
 ########################################################################################################################
 
 services:
-  db:
-    image: "postgres"
-    build:
-      context: ./db
-    restart: always
-    volumes:
-      - ./db-data/:/db/postgres-init.sql
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: sita
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #db:
+   # image: "postgres"
+   # build:
+   #   context: ./db
+   # restart: always
+   # volumes:
+   #   - ./db-data/:/db/postgres-init.sql
+   # ports:
+   #   - "5432:5432"
+   # environment:
+   #   POSTGRES_DB: sita
+   #   POSTGRES_USER: ${POSTGRES_USER}
+    #  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   app-user:
-    build: 
-      context: ./serviceUser
+    image: service-user:0.0.1-SNAPSHOT
+    build: serviceUser/
     restart: always
     ports:
       - "9000:8080"
     environment:
-     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sita
+     SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_USERS}
      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-     - db
 
   app-mdm:
-    build: 
-      context: ./serviceMDM
+    image: service-mdm:0.0.1-SNAPSHOT
+    build: serviceMDM/
     restart: always
     ports:
       - "9001:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sita
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_MDM}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-     - db
+
 
   app-kpi:
-    build: 
-      context: ./serviceKPI
+    image: service-kpi:0.0.1-SNAPSHOT
+    build: serviceKpi/
     restart: always
     ports:
       - "9002:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sita
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_KPI}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-     - db
