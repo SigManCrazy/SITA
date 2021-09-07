@@ -30,7 +30,7 @@ services:
     build: serviceUser/
     restart: always
     ports:
-      - "9000:8080"
+      - "1900:8080"
     environment:
      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_USERS}
      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
@@ -42,7 +42,7 @@ services:
     build: serviceMDM/
     restart: always
     ports:
-      - "9001:8080"
+      - "1901:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_MDM}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
@@ -55,7 +55,7 @@ services:
     build: serviceKpi/
     restart: always
     ports:
-      - "9002:8080"
+      - "1902:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_ADDRESS}:${POSTGRES_PORTS}/${POSTGRES_DB_KPI}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
